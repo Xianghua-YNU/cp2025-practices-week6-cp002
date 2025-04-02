@@ -1,3 +1,7 @@
+import matplotlib
+matplotlib.use('TkAgg')  # 切换到兼容的后端，避免 PyCharm 的后端问题
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -52,12 +56,13 @@ def calculate_intensity(r, lambda_light, R_lens):
     return intensity
 
 
-def plot_newton_rings(intensity):
+def plot_newton_rings(intensity, save_path):
     """
-    绘制牛顿环干涉条纹图像。
+    绘制牛顿环干涉条纹图像并保存到指定路径。
 
     参数:
     intensity (np.ndarray): 干涉强度分布数组
+    save_path (str): 保存图像的路径
     """
     plt.figure(figsize=(10, 10))
     # 绘制图像，调整对比度，更新绘图范围
@@ -70,8 +75,9 @@ def plot_newton_rings(intensity):
     plt.xlabel("x (m)")
     # 设置 y 轴标签
     plt.ylabel("y (m)")
-    # 显示图像
-    plt.show()
+    # 保存图像到指定路径
+    plt.savefig(save_path)
+    print(f"图像已保存到 {save_path}")
 
 
 if __name__ == "__main__":
@@ -81,5 +87,7 @@ if __name__ == "__main__":
     X, Y, r = generate_grid()
     # 计算干涉强度分布
     intensity = calculate_intensity(r, lambda_light, R_lens)
-    # 绘制牛顿环
-    plot_newton_rings(intensity)
+    # 保存路径
+    save_path = r"C:\Users\31025\OneDrive\桌面\t\newton_rings.png"
+    # 绘制牛顿环并保存
+    plot_newton_rings(intensity, save_path)
